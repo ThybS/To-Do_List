@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapılacaklar Listesi</title>
+</head>
+<body>
+    <h1>Yapılacaklar Listesi</h1>
+    <form action="/add" method="POST">
+        <input type="text" name="todo" placeholder="Bir yapılacak iş girin" required>
+        <button type="submit">Ekle</button>
+    </form>
+
+    <ul>
+        {% for todo in todos %}
+            <li>
+                {{ loop.index }} - {{ todo.strip() }}
+                <form action="/edit/{{ loop.index0 }}" method="POST" style="display:inline;">
+                    <input type="text" name="new_todo" required>
+                    <button type="submit">Düzenle</button>
+                </form>
+                <form action="/complete/{{ loop.index0 }}" method="POST" style="display:inline;">
+                    <button type="submit">Tamamla</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if not todos %}
+        <p>Yapılacak iş bulunamadı.</p>
+    {% endif %}
+</body>
+</html>
